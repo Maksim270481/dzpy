@@ -1,38 +1,39 @@
+from math import pi
+
 
 class Table:
-    def __init__(self, length, width, rad):
-        self.__length = length
-        self.__width = width
-        self.__rad = rad
+    def __init__(self, width=None, length=None, rad=None):
+        if rad is None:
+            if length is None:
+                self._width = self._length = width
+            else:
+                self._width = width
+                self._length = length
+        else:
+            self._rad = rad
+
+    def calc_area(self):
+        raise NotImplementedError('')
 
 
 class Curcle(Table):
-    def __init__(self, length, width, rad):
-        super().__init__(length, width, rad)
-
-    @staticmethod
-    def area(rad):
-        return 3.14 * rad ** 2
+    def calc_area(self):
+        return round(pi * self._rad ** 2, 2)
 
 
 class Rectangle(Table):
-    def __init__(self, length, width, rad):
-        super().__init__(length, width, rad)
-
-    @staticmethod
-    def area(length, width):
-        return length * width
+    def calc_area(self):
+        return self._width * self._length
 
 
-class Square(Table):
-    def __init__(self, length, width, rad):
-        super().__init__(length, width, rad)
+table = Rectangle(20)
+print(table.__dict__)
+print(table.calc_area())
 
-    @staticmethod
-    def area(length):
-        return length ** 2
+table1 = Curcle(12, 34, 20)
+print(table1.__dict__)
+print(table1.calc_area())
 
-
-print(Curcle.area(20))
-print(Rectangle.area(10, 20))
-print(Square.area(20))
+table2 = Rectangle(20, 10)
+print(table2.__dict__)
+print(table2.calc_area())
